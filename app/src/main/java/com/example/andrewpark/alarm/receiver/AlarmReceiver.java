@@ -8,8 +8,6 @@ import android.net.Uri;
 import android.os.Vibrator;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
-import com.example.andrewpark.alarm.AlarmActivity;
-
 import java.util.Scanner;
 
 /**
@@ -21,7 +19,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     public void onReceive(final Context context, Intent intent) {
 
         //make it go to a random game or no game if user doesnt want a game
-        AlarmActivity inst = AlarmActivity.instance();
+//        AlarmActivity inst = AlarmActivity.instance();
 
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         boolean vibrate = intent.getBooleanExtra("boolean",false);

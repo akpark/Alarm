@@ -1,52 +1,104 @@
 package com.example.andrewpark.alarm.model;
 
+import android.net.Uri;
+
 /**
  * Created by andrewpark on 8/27/15.
  */
 public class Alarm {
 
-    boolean repeat;
-    boolean vibrate;
-    boolean[] days = new boolean[7];
-    String melody_uri;
+    public static final int SUNDAY = 0;
+    public static final int MONDAY = 1;
+    public static final int TUESDAY = 2;
+    public static final int WEDNESDAY = 3;
+    public static final int THURSDAY = 4;
+    public static final int FRDIAY = 5;
+    public static final int SATURDAY = 6;
 
-    public int hour;
-    public int minute;
+    public long id;
+    public int timeHour;
+    public int timeMinute;
+    private boolean repeatingDays[];
+    public boolean repeatWeekly;
+    public Uri alarmTone;
+    public String name;
+    public boolean isEnabled;
 
     public Alarm() {
-        this.hour = -1;
-        this.minute = -1;
+        repeatingDays = new boolean[7];
+        this.timeHour = -1;
+        this.timeMinute = -1;
     }
 
-    public String getMelody_uri() {
-        return melody_uri;
+    public void setRepeatingDay(int dayOfWeek, boolean value) {
+        repeatingDays[dayOfWeek] = value;
     }
 
-    public void setMelody_uri(String melody_uri) {
-        this.melody_uri = melody_uri;
+    public boolean getRepeatingDay(int dayOfWeek) {
+        return repeatingDays[dayOfWeek];
     }
 
-    public boolean isRepeat() {
-        return repeat;
+    public long getId() {
+        return id;
     }
 
-    public boolean isVibrate() {
-        return vibrate;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setRepeat(boolean repeat) {
-        this.repeat = repeat;
+    public int getTimeHour() {
+        return timeHour;
     }
 
-    public void setVibrate(boolean vibrate) {
-        this.vibrate = vibrate;
+    public void setTimeHour(int timeHour) {
+        this.timeHour = timeHour;
     }
 
-    public boolean[] getDays() {
-        return days;
+    public int getTimeMinute() {
+        return timeMinute;
     }
 
-    public void setDays(boolean[] days) {
-        this.days = days;
+    public void setTimeMinute(int timeMinute) {
+        this.timeMinute = timeMinute;
+    }
+
+    public boolean[] getRepeatingDays() {
+        return repeatingDays;
+    }
+
+    public void setRepeatingDays(boolean[] repeatingDays) {
+        this.repeatingDays = repeatingDays;
+    }
+
+    public boolean isRepeatWeekly() {
+        return repeatWeekly;
+    }
+
+    public void setRepeatWeekly(boolean repeatWeekly) {
+        this.repeatWeekly = repeatWeekly;
+    }
+
+    public Uri getAlarmTone() {
+        return alarmTone;
+    }
+
+    public void setAlarmTone(Uri alarmTone) {
+        this.alarmTone = alarmTone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setIsEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
     }
 }

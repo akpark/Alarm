@@ -113,8 +113,12 @@ public class AlarmFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onResume() {
+        super.onResume();
+        saveData();
+    }
+
+    private void saveData() {
         SharedPreferences.Editor e = sharedPreferences.edit();
         Gson gson = new Gson();
         String value = gson.toJson(alarms);

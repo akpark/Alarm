@@ -1,6 +1,7 @@
 package com.example.andrewpark.alarm.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,24 +10,25 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.andrewpark.alarm.R;
+import com.example.andrewpark.alarm.model.Melody;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 /**
  * Created by andrewpark on 8/29/15.
  */
-public class MelodyListAdapter extends ArrayAdapter<String> {
+public class MelodyListAdapter extends ArrayAdapter<Melody> {
 
     final String LOG_TAG = MelodyListAdapter.class.getSimpleName();
     int selectedPosition = 0;
     int melody_position;
-    String melody_uri;
+    private Uri melody_uri;
+    private String melody_name;
+    private ArrayList<Melody> melody_list;
 
 
-    public MelodyListAdapter(Context context, int resource, int textViewResourceId, ArrayList<String> list) {
-        super(context, resource, textViewResourceId, (List<String>) list);
+    public MelodyListAdapter(Context context, int resource, int textViewResourceId, ArrayList<Melody> list) {
+        super(context, resource, textViewResourceId, list);
     }
 
     @Override
@@ -40,12 +42,12 @@ public class MelodyListAdapter extends ArrayAdapter<String> {
             v = vi.inflate(R.layout.melody_list_item, null);
         }
 
-        String melody = getItem(position);
-        Scanner reader = new Scanner(melody);
-        String melody_title = reader.nextLine();
-        melody_uri = reader.nextLine();
+        Melody melody = getItem(position);
+        melody_uri = melody.getMelody_uri();
+        melody_name = melody.getMelody_name();
+
         TextView melody_title_textview = (TextView)v.findViewById(R.id.melody_title_txt);
-        melody_title_textview.setText(melody_title);
+        melody_title_textview.setText(melody_name);
 
         RadioButton radioButton = (RadioButton)v.findViewById(R.id.melody_radioButton);
         radioButton.setChecked(position == selectedPosition);
