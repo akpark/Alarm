@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Alarm</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="game_prompt">Choose Games</string>
+    <string-array name="game_arrays">
+        <item>Tic-Tac-Toe</item>
+        <item>MineSweeper</item>
+        <item>Rock Paper Scissors</item>
+    </string-array>
+
+    <string name="sound_prompt">Choose Sounds</string>
+    <string-array name="sound_arrays">
+        <item>Peaceful</item>
+        <item>New</item>
+        <item>Elvis</item>
+    </string-array>
+    
+</resources>

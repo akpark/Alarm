@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/alarm_list_item_expanded"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/game_arrays"
+            android:prompt="@string/game_prompt"
+            android:gravity="right">
+        </Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="3dp">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Choose a sound"
+            android:id="@+id/sound_list"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="3dp">
+
+        <CheckBox
+            android:id="@+id/checkbox_vibrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Vibrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/days_of_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right">
+
+            <ToggleButton
+                android:id="@+id/SUN_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOn="SUN"
+                android:textOff="SUN"
+                android:text="SUN"
+                android:textSize="12sp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:padding="5dp"/>
+
+            <ToggleButton
+                android:id="@+id/MON_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOn="MON"
+                android:textOff="MON"
+                android:text="MON"
+                android:textSize="12sp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:padding="5dp"/>
+
+            <ToggleButton
+                android:id="@+id/TUE_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOn="TUE"
+                android:textOff="TUE"
+                android:text="TUE"
+                android:textSize="12sp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:padding="5dp"/>
+
+            <ToggleButton
+                android:id="@+id/WED_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOn="WED"
+                android:textOff="WED"
+                android:text="WED"
+                android:textSize="12sp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:padding="5dp"/>
+
+            <ToggleButton
+                android:id="@+id/THU_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOn="THU"
+                android:textOff="THU"
+                android:text="THU"
+                android:textSize="12sp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:padding="5dp"/>
+
+            <ToggleButton
+                android:id="@+id/FRI_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOn="FRI"
+                android:textOff="FRI"
+                android:text="FRI"
+                android:textSize="12sp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:padding="5dp"/>
+
+            <ToggleButton
+                android:id="@+id/SAT_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOn="SAT"
+                android:textOff="SAT"
+                android:text="SAT"
+                android:textSize="12sp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:padding="5dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
