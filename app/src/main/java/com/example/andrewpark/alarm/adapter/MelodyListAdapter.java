@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.example.andrewpark.alarm.R;
 import com.example.andrewpark.alarm.model.Melody;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by andrewpark on 8/29/15.
@@ -24,10 +24,10 @@ public class MelodyListAdapter extends ArrayAdapter<Melody> {
     int melody_position;
     private Uri melody_uri;
     private String melody_name;
-    private ArrayList<Melody> melody_list;
+    private String chosen_melody;
 
 
-    public MelodyListAdapter(Context context, int resource, int textViewResourceId, ArrayList<Melody> list) {
+    public MelodyListAdapter(Context context, int resource, int textViewResourceId, List<Melody> list) {
         super(context, resource, textViewResourceId, list);
     }
 
@@ -63,7 +63,7 @@ public class MelodyListAdapter extends ArrayAdapter<Melody> {
         return v;
     }
 
-    public int getChosenMelody() {
-        return melody_position;
+    public int getSelectedPosition() {
+        return selectedPosition;
     }
 }

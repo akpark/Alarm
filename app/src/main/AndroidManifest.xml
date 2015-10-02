@@ -2,12 +2,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.andrewpark.alarm" >
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <service android:name="com.example.andrewpark.alarm.receiver.AlarmService" android:enabled="true"/>
+    <service
+        android:name=".receiver.AlarmService"
+        android:enabled="true" />
+    <service
+        android:name=".service.AlarmService"
+        android:enabled="true" />
+
+    <receiver android:name=".receiver.AlarmReceiver" >
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+        </intent-filter>
+    </receiver>
 
     <application
         android:allowBackup="true"
@@ -18,8 +34,13 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".AlarmScreen"
+            android:label="@string/title_activity_alarm_screen" >
         </activity>
     </application>
 

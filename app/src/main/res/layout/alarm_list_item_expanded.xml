@@ -90,8 +90,7 @@
                 android:textSize="12sp"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:padding="5dp"
-                android:onClick="dayOnClick"/>
+                android:padding="5dp" />
 
             <ToggleButton
                 android:id="@+id/MON_btn"
@@ -103,8 +102,7 @@
                 android:textSize="12sp"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:padding="5dp"
-                android:onClick="dayOnClick"/>
+                android:padding="5dp" />
 
             <ToggleButton
                 android:id="@+id/TUE_btn"
@@ -116,8 +114,7 @@
                 android:textSize="12sp"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:padding="5dp"
-                android:onClick="dayOnClick"/>
+                android:padding="5dp" />
 
             <ToggleButton
                 android:id="@+id/WED_btn"
@@ -129,8 +126,7 @@
                 android:textSize="12sp"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:padding="5dp"
-                android:onClick="dayOnClick"/>
+                android:padding="5dp" />
 
             <ToggleButton
                 android:id="@+id/THU_btn"
@@ -142,8 +138,7 @@
                 android:textSize="12sp"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:padding="5dp"
-                android:onClick="dayOnClick"/>
+                android:padding="5dp" />
 
             <ToggleButton
                 android:id="@+id/FRI_btn"
@@ -155,8 +150,7 @@
                 android:textSize="12sp"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:padding="5dp"
-                android:onClick="dayOnClick"/>
+                android:padding="5dp" />
 
             <ToggleButton
                 android:id="@+id/SAT_btn"
@@ -168,8 +162,7 @@
                 android:textSize="12sp"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:padding="5dp"
-                android:onClick="dayOnClick"/>
+                android:padding="5dp" />
 
         </LinearLayout>
 

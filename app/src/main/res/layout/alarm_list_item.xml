@@ -24,7 +24,7 @@
                 android:textSize="40sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"/>
+                android:clickable="true" />
 
             <TextView
                 android:id="@+id/alarm_time_ampm"
@@ -35,7 +35,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/alarm_day"
+            android:id="@+id/alarm_day_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tomorrow"/>

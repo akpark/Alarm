@@ -9,6 +9,7 @@ public class Melody {
 
     private String melody_name;
     private Uri melody_uri;
+    private boolean isSelected;
 
     public Melody(String melody_name, Uri melody_uri) {
         this.melody_name = melody_name;
@@ -29,5 +30,13 @@ public class Melody {
 
     public void setMelody_uri(Uri melody_uri) {
         this.melody_uri = melody_uri;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
     }
 }

@@ -1,12 +1,10 @@
 package com.example.andrewpark.alarm;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,17 +12,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.TimePicker;
 
+import com.example.andrewpark.alarm.DBHelper.AlarmDBHelper;
 import com.example.andrewpark.alarm.adapter.ExpandableAlarmAdapter;
 import com.example.andrewpark.alarm.model.Alarm;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.example.andrewpark.alarm.receiver.AlarmReceiver;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
 
 /**
  * Created by andrewpark on 8/26/15.
@@ -33,96 +29,104 @@ public class AlarmFragment extends Fragment {
 
     static final String LOG_TAG = AlarmFragment.class.getSimpleName();
 
-    ExpandableListView alarm_listView;
-    ExpandableListAdapter mAlarmAdapter;
-    Button add_btn;
-    Button record;
-    public List<Alarm> alarms;
-    SharedPreferences sharedPreferences;
+    private AlarmDBHelper alarmDBHelper;
+    private ExpandableAlarmAdapter mAlarmAdapter;
+
+    private ExpandableListView alarm_listView;
+    private Button add_btn;
 
     public AlarmFragment() {
     }
 
-    @Nullable
+//    @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
-        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
-
-        Gson gson = new Gson();
-        String value = sharedPreferences.getString("alarm_list", null);
-
-        if (value != null) {
-            Type type = new TypeToken<List<Alarm>>() {
-            }.getType();
-            alarms = (List<Alarm>) gson.fromJson(value, type);
-        } else {
-            alarms = new ArrayList<Alarm>();
-        }
-
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
 
-        mAlarmAdapter = new ExpandableAlarmAdapter(getActivity(), alarms);
+        alarmDBHelper = new AlarmDBHelper(getActivity());
+
+        mAlarmAdapter = new ExpandableAlarmAdapter(getActivity(), alarmDBHelper.getAlarms(), AlarmFragment.this);
 
         alarm_listView = (ExpandableListView) view.findViewById(R.id.alarm_listView);
         alarm_listView.setAdapter(mAlarmAdapter);
-        alarm_listView.setClickable(true);
-        alarms.add(new Alarm());
-
-        add_btn = (Button) view.findViewById(R.id.add_btn_alarm);
-
-        add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //add alarm
-                alarms.add(new Alarm());
-                ((BaseAdapter) alarm_listView.getAdapter()).notifyDataSetChanged();
-            }
-        });
-
         alarm_listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                //alert dialogue
-                AlertDialog.Builder delete_dialog = new AlertDialog.Builder(getActivity());
-                delete_dialog.setTitle("Delete?");
-                delete_dialog.setCancelable(true);
-                delete_dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        alarms.remove(position);
-                        ((BaseAdapter) alarm_listView.getAdapter()).notifyDataSetChanged();
-                    }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog alertDialog = delete_dialog.create();
-                alertDialog.show();
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                long alarm_id = (long) view.getTag();
+                Log.v(LOG_TAG ,"alarm_id: " + alarm_id);
+                deleteAlarm(alarm_id);
                 return true;
             }
         });
 
-        record = (Button) view.findViewById(R.id.record_btn);
-
-        Log.v(LOG_TAG,"alarms: " + alarms.toString());
-
+        setAddAlarmListener(view);
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        saveData();
+    public void setAddAlarmListener(View view) {
+
+        final Alarm alarm = new Alarm();
+
+        Calendar mcurrentTime = Calendar.getInstance();
+        int currentHour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int currentMinute = mcurrentTime.get(Calendar.MINUTE);
+
+        TimePickerDialog.OnTimeSetListener mTimePickerListener = new TimePickerDialog.OnTimeSetListener(){
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                alarm.setTimeHour(selectedHour);
+                alarm.setTimeMinute(selectedMinute);
+                AlarmReceiver.cancelAlarms(getActivity());
+                alarmDBHelper.createAlarm(alarm);
+                mAlarmAdapter.setAlarms(alarmDBHelper.getAlarms());
+                AlarmReceiver.setAlarms(getActivity());
+                mAlarmAdapter.notifyDataSetChanged();
+//                ((BaseAdapter)alarm_listView.getAdapter()).notifyDataSetChanged();
+//            }
+//        };
+
+        final TimePickerDialog mAlarmTimePicker = new TimePickerDialog(getActivity(), mTimePickerListener, currentHour, currentMinute, false);
+        mAlarmTimePicker.setTitle("Select Time");
+
+        add_btn = (Button) view.findViewById(R.id.add_btn_alarm);
+        add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAlarmTimePicker.show();
+            }
+        });
     }
 
-    private void saveData() {
-        SharedPreferences.Editor e = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String value = gson.toJson(alarms);
-        e.putString("alarm_list", value);
-        e.commit();
+    public void setAlarmEnabled(long id, boolean isEnabled) {
+        Log.v(LOG_TAG,"isEnabled value: " + isEnabled);
+        AlarmReceiver.cancelAlarms(getActivity());
+
+        Alarm model = alarmDBHelper.getAlarm(id);
+        model.isEnabled = isEnabled;
+        alarmDBHelper.updateAlarm(model);
+
+        AlarmReceiver.setAlarms(getActivity());
     }
+
+    public void deleteAlarm(long id) {
+        final long alarmId = id;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Please confirm")
+                .setTitle("Delete set?")
+                .setCancelable(true)
+                .setNegativeButton("Cancel",null)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AlarmReceiver.cancelAlarms(getActivity());
+                        alarmDBHelper.deleteAlarm(alarmId);
+                        mAlarmAdapter.setAlarms(alarmDBHelper.getAlarms());
+                        ((BaseAdapter)alarm_listView.getAdapter()).notifyDataSetChanged();
+                        AlarmReceiver.setAlarms(getActivity());
+                    }
+                }).show();
+    }
+
+
 }
